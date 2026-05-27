@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dog API</title>
+</head>
+<body>
+
+<h1>Random Dog Image 🐶</h1>
+
+<button onclick="getDog()">Get Dog</button>
+
+<br><br>
+
+<img id="dogImage" width="300">
+
+<script>
+
+async function getDog(){
+
+    
+    let response = await fetch("https://dog.ceo/api/breeds/image/random");
+    let data = await response.json();
+    document.getElementById("dogImage").src = data.message;
+}
+
+</script>
+
+</body>
+</html>
