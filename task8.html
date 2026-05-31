@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fake Store API Tasks</title>
+</head>
+<body>
+
+<h2>Open Console (F12) to See Output</h2>
+
+<script>
+
+let apiLink = "https://fakestoreapi.com/products";
+
+fetch(apiLink)
+.then(res => res.json())
+.then(data => {
+
+    // Task 1: Print All Products
+    console.log("========== Task 1: All Products ==========");
+    console.log(data);
+
+    // Task 2: Print Product Titles
+    console.log("========== Task 2: Product Titles ==========");
+    data.forEach(product => {
+        console.log(product.title);
+    });
+
+    // Task 3: Total Products
+    console.log("========== Task 3: Total Products ==========");
+    console.log("Total Products:", data.length);
+
+    // Task 4: Categories
+    console.log("========== Task 4: Categories ==========");
+    let categories = [...new Set(data.map(product => product.category))];
+    categories.forEach(category => console.log(category));
+
+    // Task 5: Products Above $50
+    console.log("========== Task 5: Products Above $50 ==========");
+    let above50 = data.filter(product => product.price > 50);
+    above50.forEach(product => {
+        console.log(product.title, "-", product.price);
+    });
+
+    // Task 6: Products Below $50
+    console.log("========== Task 6: Products Below $50 ==========");
+    let below50 = data.filter(product => product.price < 50);
+    console.log(below50);
+
+    // Task 7: First Product Above $100
+    console.log("========== Task 7: First Product Above $100 ==========");
+    let firstAbove100 = data.find(product => product.price > 100);
+    console.log(firstAbove100);
+
+    // Task 8: Search Product
+    console.log("========== Task 8: Search Product ==========");
+    let searchText = "shirt";
+
+    let searchResult = data.filter(product =>
+        product.title.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    console.log(searchResult);
+
+    // Task 9: Electronics Count
+    console.log("========== Task 9: Electronics Count ==========");
+    let electronicsCount = data.filter(
+        product => product.category === "electronics"
+    ).length;
+
+    console.log("Electronics Count:", electronicsCount);
+
+    // Task 10: Highest Price Product
+    console.log("========== Task 10: Highest Price Product ==========");
+    let highest = data.reduce((max, product) =>
+        product.price > max.price ? product : max
+    );
+
+    console.log(highest);
+
+    // Task 11: Lowest Price Product
+    console.log("========== Task 11: Lowest Price Product ==========");
+    let lowest = data.reduce((min, product) =>
+        product.price < min.price ? product : min
+    );
+
+    console.log(lowest);
+
+    // Task 12: Total Price
+    console.log("========== Task 12: Total Price ==========");
+    let totalPrice = data.reduce(
+        (sum, product) => sum + product.price,
+        0
+    );
+
+    console.log("Total Price:", totalPrice);
+
+    // Task 13: Average Price
+    console.log("========== Task 13: Average Price ==========");
+    let averagePrice = totalPrice / data.length;
+
+    console.log("Average Price:", averagePrice);
+
+    // Task 14: Highest Rating Product
+    console.log("========== Task 14: Highest Rating Product ==========");
+    let bestRated = data.reduce((max, product) =>
+        product.rating.rate > max.rating.rate ? product : max
+    );
+
+    console.log(bestRated);
+
+    // Task 15: Lowest Rating Product
+    console.log("========== Task 15: Lowest Rating Product ==========");
+    let lowestRated = data.reduce((min, product) =>
+        product.rating.rate < min.rating.rate ? product : min
+    );
+
+    console.log(lowestRated);
+
+    // Task 16: Category Wise Count
+    console.log("========== Task 16: Category Wise Count ==========");
+    let categoryCount = data.reduce((acc, product) => {
+
+        acc[product.category] =
+            (acc[product.category] || 0) + 1;
+
+        return acc;
+
+    }, {});
+
+    console.log(categoryCount);
+
+    // Task 17: Discounted Products
+    console.log("========== Task 17: Discounted Products ==========");
+    let discounted = data.map(product => ({
+        title: product.title,
+        oldPrice: product.price,
+        newPrice: (product.price * 0.9).toFixed(2)
+    }));
+
+    console.log(discounted);
+
+    // Task 18: Sort Low To High
+    console.log("========== Task 18: Sort Low To High ==========");
+    let lowToHigh = [...data].sort(
+        (a, b) => a.price - b.price
+    );
+
+    console.log(lowToHigh);
+
+    // Task 19: Sort High To Low
+    console.log("========== Task 19: Sort High To Low ==========");
+    let highToLow = [...data].sort(
+        (a, b) => b.price - a.price
+    );
+
+    console.log(highToLow);
+
+    // Task 20: Any Product Above $500
+    console.log("========== Task 20: Any Product Above $500 ==========");
+    let above500 = data.some(
+        product => product.price > 500
+    );
+
+    console.log(above500);
+
+    // Task 21: All Products Above Rating 3
+    console.log("========== Task 21: All Products Above Rating 3 ==========");
+    let allAbove3 = data.every(
+        product => product.rating.rate > 3
+    );
+
+    console.log(allAbove3);
+
+    // Task 22: Top 5 Costliest Products
+    console.log("========== Task 22: Top 5 Costliest Products ==========");
+    let top5Costliest = [...data]
+        .sort((a, b) => b.price - a.price)
+        .slice(0, 5);
+
+    top5Costliest.forEach(product => {
+        console.log(product.title);
+    });
+
+    // Task 23: Top 5 Rated Products
+    console.log("========== Task 23: Top 5 Rated Products ==========");
+    let top5Rated = [...data]
+        .sort((a, b) => b.rating.rate - a.rating.rate)
+        .slice(0, 5);
+
+    console.log(top5Rated);
+
+    // Task 24: Group By Category
+    console.log("========== Task 24: Group By Category ==========");
+    let grouped = data.reduce((acc, product) => {
+
+        if (!acc[product.category]) {
+            acc[product.category] = [];
+        }
+
+        acc[product.category].push(product);
+
+        return acc;
+
+    }, {});
+
+    console.log(grouped);
+
+    // Task 25: Convert USD To INR
+    console.log("========== Task 25: USD To INR ==========");
+    data.forEach(product => {
+        console.log(
+            product.title,
+            "₹" + (product.price * 85).toFixed(2)
+        );
+    });
+
+})
+.catch(error => {
+    console.log("Error:", error);
+})
+.finally(() => {
+    console.log("========== ALL TASKS COMPLETED ==========");
+});
+
+</script>
+
+</body>
+</html>
